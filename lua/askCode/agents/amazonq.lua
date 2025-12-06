@@ -15,7 +15,7 @@ end
 function M.prepare_command(prompt)
   -- Escape the prompt to ensure it's safely passed to the shell.
   local escaped_prompt = vim.fn.shellescape(prompt)
-  return string.format("echo %s | q chat --no-interactive 2>&1", escaped_prompt)
+  return string.format("echo %s | kiro-cli chat --no-interactive 2>&1", escaped_prompt)
 end
 
 --- Parses the response from the AmazonQ CLI.
