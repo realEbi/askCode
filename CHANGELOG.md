@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/realEbi/askCode/compare/v1.1.0...v1.2.0) (2025-12-07)
+
+
+### Features
+
+* Add configurable window types for display ([7c97edf](https://github.com/realEbi/askCode/commit/7c97edf30a406344ed66ef37a8f19b2d3c2d66ec))
+* **config, cli:** Introduce runtime configuration management ([39d848e](https://github.com/realEbi/askCode/commit/39d848e91398c0a983971c86bfba5c3f1cc01787))
+
 ## [1.1.0](https://github.com/e3oroush/askCode/compare/v1.0.0...v1.1.0) (2025-10-26)
 
 
