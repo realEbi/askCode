@@ -1,38 +1,60 @@
 local config = require("askCode.config")
 local M = {}
 
---- Creates a floating window to show content.
+--- Creates a window to show content.
 --- @param content string The content to display.
 --- @param on_close function A callback to execute when the window is closed.
 --- @param editable boolean|nil Whether the window should be editable (default: false).
 --- @param on_apply function|nil Callback for apply action (Q key) - receives edited content.
 --- @return number, number The window ID and buffer ID.
-function M.show_in_float(content, on_close, editable, on_apply)
+function M.show_window(content, on_close, editable, on_apply)
   local window_config = config.current_config.window
+  local window_type = window_config.type or "float"
 
-  local width = math.floor(vim.o.columns * window_config.width_ratio)
-  if width > window_config.max_width then
-    width = window_config.max_width
-  end
-
-  local height = math.floor(vim.o.lines * window_config.height_ratio)
-  if height > window_config.max_height then
-    height = window_config.max_height
-  end
-
-  local win_opts = {
-    relative = "cursor",
-    width = width,
-    height = height,
-    row = 1,
-    col = 0,
-    style = "minimal",
-    border = "rounded",
-  }
   local buf_id = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_set_option_value("filetype", "markdown", { buf = buf_id })
 
-  local win_id = vim.api.nvim_open_win(buf_id, true, win_opts)
+  local win_id
+  if window_type == "vertical" then
+    vim.api.nvim_command("vsplit")
+    win_id = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(win_id, buf_id)
+    local width = math.floor(vim.o.columns * window_config.width_ratio)
+    if width > window_config.max_width then
+      width = window_config.max_width
+    end
+    vim.api.nvim_win_set_width(win_id, width)
+  elseif window_type == "horizontal" then
+    vim.api.nvim_command("split")
+    win_id = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(win_id, buf_id)
+    local height = math.floor(vim.o.lines * window_config.height_ratio)
+    if height > window_config.max_height then
+      height = window_config.max_height
+    end
+    vim.api.nvim_win_set_height(win_id, height)
+  else -- float is the default
+    local width = math.floor(vim.o.columns * window_config.width_ratio)
+    if width > window_config.max_width then
+      width = window_config.max_width
+    end
+
+    local height = math.floor(vim.o.lines * window_config.height_ratio)
+    if height > window_config.max_height then
+      height = window_config.max_height
+    end
+
+    local win_opts = {
+      relative = "cursor",
+      width = width,
+      height = height,
+      row = 1,
+      col = 0,
+      style = "minimal",
+      border = "rounded",
+    }
+    win_id = vim.api.nvim_open_win(buf_id, true, win_opts)
+  end
 
   -- Prepare content with instructions if editable
   -- Set content
@@ -77,13 +99,13 @@ function M.show_in_float(content, on_close, editable, on_apply)
   return win_id, buf_id
 end
 
---- Updates the content of a floating window.
+--- Updates the content of a window.
 --- @param win_id number The ID of the window to update.
 --- @param buf_id number The ID of the buffer to update.
 --- @param content string The new content.
 --- @param replacement? boolean if the buffer is for replacement command
 --- @param cursor_line number|nil Optional line number to position cursor (defaults to end).
-function M.update_float(win_id, buf_id, content, cursor_line, replacement)
+function M.update_window(win_id, buf_id, content, cursor_line, replacement)
   vim.schedule(function()
     if not (buf_id and vim.api.nvim_buf_is_valid(buf_id)) then
       return

@@ -38,6 +38,37 @@ vim.api.nvim_create_user_command("AskCodeReplace", function(opts)
   end
 end, { range = true, nargs = "?" })
 
+vim.api.nvim_create_user_command("AskCodeConfig", function(opts)
+  local args = vim.split(opts.args, "%s+")
+  local key = args[1]
+  local value = args[2]
+  
+  if not key or key == "" then
+    vim.notify("Usage: AskCodeConfig <key> [value]", vim.log.levels.ERROR)
+    return
+  end
+  
+  if value then
+    local new_value = require("askCode").set_config(key, value)
+    vim.notify(string.format("Set %s = %s", key, vim.inspect(new_value)), vim.log.levels.INFO)
+  else
+    local current_value = require("askCode").get_config(key)
+    vim.notify(string.format("%s = %s", key, vim.inspect(current_value)), vim.log.levels.INFO)
+  end
+end, {
+  nargs = "+",
+  complete = function(arg_lead, cmd_line, cursor_pos)
+    local args = vim.split(cmd_line, "%s+")
+    if #args <= 2 then
+      local keys = require("askCode.config").get_all_keys()
+      return vim.tbl_filter(function(key)
+        return vim.startswith(key, arg_lead)
+      end, keys)
+    end
+    return {}
+  end,
+})
+
 vim.keymap.set(
   "v",
   "<Plug>(AskCodeExplain)",

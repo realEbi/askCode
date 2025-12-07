@@ -23,13 +23,13 @@ local T = new_set({
   },
 })
 
--- Test set for show_in_float
-T["show_in_float()"] = new_set()
+-- Test set for show_window
+T["show_window()"] = new_set()
 
-T["show_in_float()"]["creates a floating window with content"] = function()
+T["show_window()"]["creates a floating window with content"] = function()
   -- Execute the function
   child.lua([[ 
-    win_id, buf_id = ui.show_in_float("hello\nworld")
+    win_id, buf_id = ui.show_window("hello\nworld")
   ]])
   local win_id = child.lua_get("win_id")
   local buf_id = child.lua_get("buf_id")
@@ -43,13 +43,13 @@ T["show_in_float()"]["creates a floating window with content"] = function()
   eq(buffer_content, { "hello", "world" })
 end
 
-T["show_in_float()"]["calls on_close when window is closed"] = function()
+T["show_window()"]["calls on_close when window is closed"] = function()
   child.lua([[ 
     _G.close_called = false
     local on_close = function()
       _G.close_called = true
     end
-    win_id, buf_id = ui.show_in_float("test", on_close)
+    win_id, buf_id = ui.show_window("test", on_close)
   ]])
 
   -- Close the window by sending 'q'
@@ -61,19 +61,19 @@ T["show_in_float()"]["calls on_close when window is closed"] = function()
 end
 
 
--- Test set for update_float
-T["update_float()"] = new_set()
+-- Test set for update_window
+T["update_window()"] = new_set()
 
-T["update_float()"]["updates the content of a floating window"] = function()
+T["update_window()"]["updates the content of a floating window"] = function()
   -- Create a window first
   child.lua([[ 
-    win_id, buf_id = ui.show_in_float("initial content")
+    win_id, buf_id = ui.show_window("initial content")
   ]])
   local win_id = child.lua_get("win_id")
   local buf_id = child.lua_get("buf_id")
 
   -- Update the window
-  child.lua("ui.update_float(" .. win_id .. ", " .. buf_id .. ", [[new\ncontent]])")
+  child.lua("ui.update_window(" .. win_id .. ", " .. buf_id .. ", [[new\ncontent]])")
   child.lua("vim.loop.sleep(50)") -- Wait for vim.schedule
 
   -- Verify buffer content

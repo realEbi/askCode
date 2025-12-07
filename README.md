@@ -28,7 +28,7 @@ Install `askCode.nvim` using your favorite package manager.
 
 ```lua
 {
-  "e3oroush/askCode",
+  "realEbi/askCode",
   config = function()
     require("askCode").setup({
       -- Your configuration here
@@ -41,7 +41,7 @@ Install `askCode.nvim` using your favorite package manager.
 
 ```lua
 use {
-  "e3oroush/askCode",
+  "realEbi/askCode",
   config = function()
     require("askCode").setup({
       -- Your configuration here
@@ -60,7 +60,8 @@ require("askCode").setup({
   debug = false,           -- Enable debug mode (default: false)
   quit_key = "q",          -- Key to quit floating windows (default: "q")
   output_format = "json",  -- Output format (default: "json")
-  window = {               -- Floating window configuration
+  window = {               -- Configuration for the display window
+    type = "float",        -- Type of window: "float", "vertical", or "horizontal" (default: "float")
     width_ratio = 0.7,     -- Window width as ratio of screen width (default: 0.7)
     height_ratio = 0.7,    -- Window height as ratio of screen height (default: 0.7)
     max_width = 240,       -- Maximum window width in columns (default: 240)
@@ -89,6 +90,36 @@ The `:AskCode` command automatically detects whether to start a new conversation
 
 **Note**: Code replacement only works in visual mode with selected text.
 
+### Configuration Management
+
+You can get and set configuration values at runtime using the `:AskCodeConfig` command:
+
+**Get a configuration value:**
+```vim
+:AskCodeConfig agent
+:AskCodeConfig window.type
+```
+
+**Set a configuration value:**
+```vim
+:AskCodeConfig agent amazonq
+:AskCodeConfig window.type vertical
+:AskCodeConfig window.width_ratio 0.8
+:AskCodeConfig debug true
+```
+
+The command supports tab completion for all available configuration keys. Values are automatically converted to the appropriate type (booleans, numbers, strings).
+
+**Programmatic access:**
+```lua
+-- Get config
+local agent = require("askCode").get_config("agent")
+local all_config = require("askCode").get_config()
+
+-- Set config
+require("askCode").set_config("window.type", "horizontal")
+```
+
 ### Keybinding Examples
 
 You can map the commands to keybindings for easier access:
@@ -110,7 +141,7 @@ Contributions are welcome! To get started with development:
 1.  **Clone the repository**:
 
     ```sh
-    git clone https://github.com/e3oroush/askCode.git askCode.nvim
+    git clone https://github.com/realEbi/askCode.git askCode.nvim
     cd askCode.nvim
     ```
 
