@@ -1,21 +1,3 @@
-M.show_in_float()                                              *M.show_in_float*
-     Creates a floating window to show content.
-     @param content string The content to display.
-     @param on_close function A callback to execute when the window is closed.
-     @param editable boolean|nil Whether the window should be editable (default: false).
-     @param on_apply function|nil Callback for apply action (Q key) - receives edited content.
-     @return number, number The window ID and buffer ID.
-
-
-M.update_float()                                                *M.update_float*
-     Updates the content of a floating window.
-     @param win_id number The ID of the window to update.
-     @param buf_id number The ID of the buffer to update.
-     @param content string The new content.
-     @param replacement? boolean if the buffer is for replacement command
-     @param cursor_line number|nil Optional line number to position cursor (defaults to end).
-
-
 Config                                                                  *Config*
 
     Fields: ~
@@ -84,44 +66,6 @@ M.ask()                                                                  *M.ask*
      @param prompt string The prompt to send to the AmazonQ CLI.
      @return string? The response from the CLI, or nil if an error occurred.
 
-
-M.setup()                                                              *M.setup*
-     Merges the given configuration with the default settings.
-     This function will be used to configure the agent in the future.
-     @param cfg table The configuration table to merge.
-
-
-M.prepare_command()                                          *M.prepare_command*
-     Prepares the shell command for sending a prompt to the Gemini CLI.
-     @param prompt string The prompt to be sent.
-     @return string The fully formed shell command.
-
-
-M.parse_response()                                            *M.parse_response*
-     Parses the JSON response from the Gemini CLI.
-     @param json_string string The JSON string to parse.
-     @return string? The extracted response, or nil if parsing fails.
-
-
-M.ask()                                                                  *M.ask*
-     Sends a prompt to the Gemini CLI and returns the response.
-     It uses a non-interactive mode by piping the prompt to the CLI.
-     @param prompt string The prompt to send to the Gemini CLI.
-     @return string? The response from the CLI, or nil if an error occurred.
-
-
-M.setup({cfg?})                                                        *M.setup*
-     setup function
-
-    Parameters: ~
-        {cfg?}  (Config)
-
-
-M.ask()                                                                  *M.ask*
-     Starts a new conversation with an AI agent about selected code
-     Closes any existing conversation and creates a new floating window
-     @param question string The question to ask the AI agent
-     @param mode string The mode context (e.g., visual selection info)
 
 
 M.follow_up()                                                      *M.follow_up*
