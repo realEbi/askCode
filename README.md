@@ -60,7 +60,8 @@ require("askCode").setup({
   debug = false,           -- Enable debug mode (default: false)
   quit_key = "q",          -- Key to quit floating windows (default: "q")
   output_format = "json",  -- Output format (default: "json")
-  window = {               -- Floating window configuration
+  window = {               -- Configuration for the display window
+    type = "float",        -- Type of window: "float", "vertical", or "horizontal" (default: "float")
     width_ratio = 0.7,     -- Window width as ratio of screen width (default: 0.7)
     height_ratio = 0.7,    -- Window height as ratio of screen height (default: 0.7)
     max_width = 240,       -- Maximum window width in columns (default: 240)

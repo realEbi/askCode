@@ -14,6 +14,7 @@ M.default = {
   quit_key = "q",
   output_format = "json",
   window = {
+    type = "float", -- float, vertical, horizontal
     width_ratio = 0.7,
     height_ratio = 0.7,
     max_width = 240,

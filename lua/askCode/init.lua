@@ -83,7 +83,7 @@ function M.ask(question, mode)
   end
 
   local command = agent.prepare_command(full_prompt)
-  state.win_id, state.buf_id = ui.show_in_float("Loading...", on_close)
+  state.win_id, state.buf_id = ui.show_window("Loading...", on_close)
 
   local response_lines = {}
   local on_stdout = function(_, data)
@@ -114,7 +114,7 @@ function M.ask(question, mode)
     utils.append_file(state.history_file, agent_response)
 
     state.display_content = "AGENT: " .. response
-    ui.update_float(state.win_id, state.buf_id, state.display_content)
+    ui.update_window(state.win_id, state.buf_id, state.display_content)
   end
 
   runner.run_command(
@@ -174,7 +174,7 @@ function M.follow_up(question)
     local new_display_part = string.format("\n\n---\n\nUSER: %s\n\nAGENT: %s", question, response)
     state.display_content = state.display_content .. new_display_part
 
-    ui.update_float(state.win_id, state.buf_id, state.display_content, cursor_position)
+    ui.update_window(state.win_id, state.buf_id, state.display_content, cursor_position)
   end
 
   runner.run_command({ "sh", "-c", command }, on_stdout, { on_exit = on_exit, stdout_buffered = true })
@@ -224,7 +224,7 @@ function M.ask_replace(question, mode)
 
   local command = agent.prepare_command(full_prompt)
   state.display_content = "Press Q to apply replacement, q to cancel\n\n"
-  state.win_id, state.buf_id = ui.show_in_float(state.display_content, on_close, true, on_apply)
+  state.win_id, state.buf_id = ui.show_window(state.display_content, on_close, true, on_apply)
 
   local response_lines = {}
   local on_stdout = function(_, data)
@@ -245,7 +245,7 @@ function M.ask_replace(question, mode)
     end
 
     state.display_content = state.display_content .. response
-    ui.update_float(state.win_id, state.buf_id, state.display_content, nil, true)
+    ui.update_window(state.win_id, state.buf_id, state.display_content, nil, true)
   end
 
   runner.run_command({ "sh", "-c", command }, on_stdout, { on_exit = on_exit, stdout_buffered = true })
