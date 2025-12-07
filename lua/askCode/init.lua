@@ -19,6 +19,21 @@ function M.setup(cfg)
   config.merge_with_default(cfg)
 end
 
+--- Gets a config value
+---@param key? string dot separated key (e.g., "window.type"). If nil, returns entire config
+---@return any
+function M.get_config(key)
+  return config.get(key)
+end
+
+--- Sets a config value
+---@param key string dot separated key (e.g., "window.type")
+---@param value any the value to set
+---@return any the new value
+function M.set_config(key, value)
+  return config.set(key, value)
+end
+
 --- Constructs a prompt for the AI assistant based on question, mode, and conversation history
 --- @param question string The user's question or request
 --- @param mode string The current editor mode (visual, normal, etc.)
