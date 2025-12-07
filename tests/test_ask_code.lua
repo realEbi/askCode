@@ -20,15 +20,15 @@ local T = new_set({
         config = require('askCode.config')
 
         -- Mock UI functions
-        _G.show_in_float_calls = {}
-        ui.show_in_float = function(content, on_close)
-          table.insert(_G.show_in_float_calls, {content = content})
+        _G.show_window_calls = {}
+        ui.show_window = function(content, on_close)
+          table.insert(_G.show_window_calls, {content = content})
           return 1, 1 -- return mock win_id and buf_id
         end
 
-        _G.update_float_calls = {}
-        ui.update_float = function(win_id, buf_id, content)
-          table.insert(_G.update_float_calls, {win_id = win_id, buf_id = buf_id, content = content})
+        _G.update_window_calls = {}
+        ui.update_window = function(win_id, buf_id, content)
+          table.insert(_G.update_window_calls, {win_id = win_id, buf_id = buf_id, content = content})
         end
       ]])
     end,
@@ -63,7 +63,7 @@ T["ask"]["should show plain text response in new window"] = function()
   child.lua("vim.loop.sleep(100)") -- Wait for async operations
 
   -- 3. Assert the expected outcome
-  local update_calls = child.lua_get("_G.update_float_calls")
+  local update_calls = child.lua_get("_G.update_window_calls")
   eq(#update_calls, 1)
   eq(update_calls[1].content, "AGENT: mocked response")
 end
@@ -92,7 +92,7 @@ T["ask"]["should parse and show JSON response in new window"] = function()
   child.lua("vim.loop.sleep(100)") -- Wait for async operations
 
   -- 3. Assert the expected outcome
-  local update_calls = child.lua_get("_G.update_float_calls")
+  local update_calls = child.lua_get("_G.update_window_calls")
   eq(#update_calls, 1)
   eq(update_calls[1].content, "AGENT: parsed content")
 end
@@ -130,7 +130,7 @@ T["follow_up"]["should update window with conversation"] = function()
   child.lua("vim.loop.sleep(100)") -- Wait for async operations
 
   -- 3. Assert the expected outcome
-  local update_calls = child.lua_get("_G.update_float_calls")
+  local update_calls = child.lua_get("_G.update_window_calls")
   eq(#update_calls, 2) -- One for initial ask, one for follow-up
   local expected_content = "AGENT: initial response\n\n---\n\nUSER: follow-up question\n\nAGENT: follow-up response"
   eq(update_calls[2].content, expected_content)

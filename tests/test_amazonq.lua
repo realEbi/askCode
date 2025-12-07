@@ -32,12 +32,12 @@ T["prepare_command"] = new_set()
 
 T["prepare_command"]["should format command correctly"] = function()
   local command = child.lua_get([[Agent.prepare_command("test prompt")]])
-  eq(command, "echo 'test prompt' | q chat --no-interactive 2>&1")
+  eq(command, "echo 'test prompt' | kiro-cli chat --no-interactive 2>&1")
 end
 
 T["prepare_command"]["should escape special characters"] = function()
   local command = child.lua_get([[Agent.prepare_command("test 'quoted' prompt")]])
-  eq(command, "echo 'test '\\''quoted'\\'' prompt' | q chat --no-interactive 2>&1")
+  eq(command, "echo 'test '\\''quoted'\\'' prompt' | kiro-cli chat --no-interactive 2>&1")
 end
 
 -- Test parse_response function
