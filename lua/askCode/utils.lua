@@ -1,5 +1,13 @@
 M = {}
 
+--- Logs a debug message if debug mode is enabled.
+--- @param msg string The message to log.
+function M.log(msg)
+  if require("askCode.config").current_config.debug then
+    vim.notify("[askCode] " .. msg, vim.log.levels.DEBUG)
+  end
+end
+
 --- Gets the content of the current buffer.
 --- If in visual mode, it returns the selected lines. Otherwise, it returns the whole buffer content.
 --- @param mode string the vim mode it's either 'n' for normal or 'v' for visual mode

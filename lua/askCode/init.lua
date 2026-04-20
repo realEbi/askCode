@@ -98,11 +98,13 @@ function M.ask(question, mode)
   end
 
   local command = agent.prepare_command(full_prompt)
+  utils.log("ask: command built for agent '" .. agent_name .. "': " .. command)
   state.win_id, state.buf_id = ui.show_window("Loading...", on_close)
 
   local response_lines = {}
   local on_stdout = function(_, data)
     if data then
+      utils.log("ask: stdout received, lines: " .. #data)
       for _, line in ipairs(data) do
         table.insert(response_lines, line)
       end
@@ -111,6 +113,7 @@ function M.ask(question, mode)
 
   local on_stderr = function(_, data)
     if data and agent_name == "amazonq" then
+      utils.log("ask: stderr received, lines: " .. #data)
       for _, line in ipairs(data) do
         table.insert(response_lines, line)
       end
@@ -118,6 +121,7 @@ function M.ask(question, mode)
   end
 
   local on_exit = function()
+    utils.log("ask: job exited, total response length: " .. #table.concat(response_lines, "\n"))
     local response = table.concat(response_lines, "\n")
     if agent.parse_response then
       local parsed = agent.parse_response(response)
@@ -165,10 +169,12 @@ function M.follow_up(question)
   local cursor_position = #previous_content_lines + 3 -- +3 for separator lines
 
   local command = agent.prepare_command(history_content)
+  utils.log("follow_up: command built for agent '" .. agent_name .. "': " .. command)
 
   local response_lines = {}
   local on_stdout = function(_, data)
     if data then
+      utils.log("follow_up: stdout received, lines: " .. #data)
       for _, line in ipairs(data) do
         table.insert(response_lines, line)
       end
@@ -176,6 +182,7 @@ function M.follow_up(question)
   end
 
   local on_exit = function()
+    utils.log("follow_up: job exited, total response length: " .. #table.concat(response_lines, "\n"))
     local response = table.concat(response_lines, "\n")
     if agent.parse_response then
       local parsed = agent.parse_response(response)
