@@ -112,7 +112,7 @@ function M.ask(question, mode)
   end
 
   local on_stderr = function(_, data)
-    if data and agent_name == "amazonq" then
+    if data and agent_name == "kiro" then
       utils.log("ask: stderr received, lines: " .. #data)
       for _, line in ipairs(data) do
         table.insert(response_lines, line)

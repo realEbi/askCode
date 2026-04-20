@@ -6,7 +6,7 @@ local M = {}
 
 M.agents = {
   gemini = require("askCode.agents.gemini"),
-  amazonq = require("askCode.agents.amazonq"),
+  kiro = require("askCode.agents.kiro"),
   opencode = require("askCode.agents.opencode"),
 }
 

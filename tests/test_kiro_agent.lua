@@ -10,8 +10,8 @@ local T = new_set({
     -- Before each test case, restart Neovim with a minimal config
     pre_case = function()
       child.restart({ "-u", "scripts/minimal_init.lua" })
-      -- Load the amazonq agent module
-      child.lua([[Agent = require('askCode.agents.amazonq')]])
+      -- Load the kiro agent module
+      child.lua([[Agent = require('askCode.agents.kiro')]])
     end,
     -- After all tests in this set are done, stop the child process
     post_once = child.stop,
@@ -67,14 +67,14 @@ T["ask"]["should return response from command"] = function()
     local original_popen = io.popen
     io.popen = function(command)
       return {
-        read = function() return ">mocked amazonq response" end,
+        read = function() return ">mocked kiro response" end,
         close = function() end,
       }
     end
   ]])
 
   local response = child.lua_get([[Agent.ask('test prompt')]])
-  eq(response, "mocked amazonq response")
+  eq(response, "mocked kiro response")
 
   -- Restore original function
   child.lua([[io.popen = original_popen]])

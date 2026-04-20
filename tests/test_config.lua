@@ -85,8 +85,8 @@ end
 T["set()"] = new_set()
 
 T["set()"]["sets top-level value"] = function()
-  child.lua([[require('askCode.config').set('agent', 'amazonq')]])
-  eq(child.lua_get([[require('askCode.config').get('agent')]]), "amazonq")
+  child.lua([[require('askCode.config').set('agent', 'kiro')]])
+  eq(child.lua_get([[require('askCode.config').get('agent')]]), "kiro")
 end
 
 T["set()"]["sets nested value with dot notation"] = function()
@@ -117,7 +117,7 @@ end
 T["reset_config()"] = new_set()
 
 T["reset_config()"]["resets config to default values"] = function()
-  child.lua([[require('askCode.config').set('agent', 'amazonq')]])
+  child.lua([[require('askCode.config').set('agent', 'kiro')]])
   child.lua([[require('askCode.config').set('window.type', 'vertical')]])
   child.lua([[require('askCode.config').reset_config()]])
   

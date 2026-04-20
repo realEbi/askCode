@@ -1,12 +1,12 @@
 # AskCode.nvim
 
-AskCode is a Neovim plugin that helps developers explore and understand codebases by connecting to CLI-based AI assistants like `gemini-cli` and `amazonq`. It acts as your in-editor guide, letting you ask context-aware questions about selected code and receive answers without leaving Neovim.
+AskCode is a Neovim plugin that helps developers explore and understand codebases by connecting to CLI-based AI assistants like `gemini-cli`, `kiro-cli`, and `opencode`. It acts as your in-editor guide, letting you ask context-aware questions about selected code and receive answers without leaving Neovim.
 
 ![Image](https://github.com/user-attachments/assets/e5f0dadb-9bdc-4b43-8c77-15a11810a3da)
 
 ✨ **Features**
 
-- **Multi-agent support**: Choose your preferred AI backend (Gemini, AmazonQ, etc.).
+- **Multi-agent support**: Choose your preferred AI backend (Gemini, Kiro, OpenCode, etc.).
 - **Configurable**: Select agents and tweak settings via a simple Lua API.
 - **Prepared prompts**: Built-in use cases like explaining code, finding bugs, or suggesting optimizations.
 - **Code replacement**: Select code and ask AI to modify it directly in your buffer (add docstrings, fix bugs, refactor, etc.).
@@ -18,7 +18,15 @@ AskCode is a Neovim plugin that helps developers explore and understand codebase
 ### Prerequisites
 
 - Neovim (v0.9.0 or later)
-- A compatible AI assistant CLI installed and configured in your shell environment (e.g., `gemini-cli`, `amazonq`).
+- A compatible AI assistant CLI installed and configured in your shell environment (e.g., `gemini-cli`, `kiro-cli`, `opencode`).
+
+### Supported Agents
+
+| Agent key | CLI | Notes |
+|---|---|---|
+| `gemini` | [`gemini-cli`](https://github.com/google-gemini/gemini-cli) | Default agent |
+| `kiro` | [`kiro-cli`](https://kiro.dev) | Reads from stderr |
+| `opencode` | [`opencode`](https://opencode.ai) | Uses `--format json` mode |
 
 ### Installation
 
@@ -102,7 +110,7 @@ You can get and set configuration values at runtime using the `:AskCodeConfig` c
 
 **Set a configuration value:**
 ```vim
-:AskCodeConfig agent amazonq
+:AskCodeConfig agent kiro
 :AskCodeConfig window.type vertical
 :AskCodeConfig window.width_ratio 0.8
 :AskCodeConfig debug true
@@ -171,5 +179,5 @@ The project uses `mini.nvim` for its testing framework. You can find more inform
 - [ ] **Integrate Claude-Code Agent**: Add a new agent for ClaudeCode by implementing the `prepare_command` function for its CLI.
 - [ ] **Support Streaming JSON**: Improve the stream processor to parse chunked JSON responses for real-time display.
 - [x] **Support Follow-up Questions**: Maintain conversation history to allow for follow-up questions.
-- [x] **Integrate AmazonQ Agent**: Add a new agent for AmazonQ by implementing the `prepare_command` function for its CLI.
+- [x] **Integrate Kiro Agent**: Add a new agent for Kiro by implementing the `prepare_command` function for its CLI.
 - [x] **Support Text Replacement Actions**: Enable agent to perform text replacements or modifications (e.g., adding function docstrings, refactoring code) directly in the buffer instead of just displaying responses.
