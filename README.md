@@ -22,11 +22,11 @@ AskCode is a Neovim plugin that helps developers explore and understand codebase
 
 ### Supported Agents
 
-| Agent key | CLI | Notes |
-|---|---|---|
-| `gemini` | [`gemini-cli`](https://github.com/google-gemini/gemini-cli) | Default agent |
-| `kiro` | [`kiro-cli`](https://kiro.dev) | Reads from stderr |
-| `opencode` | [`opencode`](https://opencode.ai) | Uses `--format json` mode |
+| Agent key  | CLI                                                         | Notes                     |
+| ---------- | ----------------------------------------------------------- | ------------------------- |
+| `gemini`   | [`gemini-cli`](https://github.com/google-gemini/gemini-cli) | Default agent             |
+| `kiro`     | [`kiro-cli`](https://kiro.dev)                              | Reads from stderr         |
+| `opencode` | [`opencode`](https://opencode.ai)                           | Uses `--format json` mode |
 
 ### Installation
 
@@ -103,12 +103,14 @@ The `:AskCode` command automatically detects whether to start a new conversation
 You can get and set configuration values at runtime using the `:AskCodeConfig` command:
 
 **Get a configuration value:**
+
 ```vim
 :AskCodeConfig agent
 :AskCodeConfig window.type
 ```
 
 **Set a configuration value:**
+
 ```vim
 :AskCodeConfig agent kiro
 :AskCodeConfig window.type vertical
@@ -119,6 +121,7 @@ You can get and set configuration values at runtime using the `:AskCodeConfig` c
 The command supports tab completion for all available configuration keys. Values are automatically converted to the appropriate type (booleans, numbers, strings).
 
 **Programmatic access:**
+
 ```lua
 -- Get config
 local agent = require("askCode").get_config("agent")
