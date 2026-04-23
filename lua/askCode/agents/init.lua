@@ -8,6 +8,7 @@ M.agents = {
   gemini = require("askCode.agents.gemini"),
   kiro = require("askCode.agents.kiro"),
   opencode = require("askCode.agents.opencode"),
+  claude = require("askCode.agents.claude"),
 }
 
 ---@param name string The name of the agent to get.

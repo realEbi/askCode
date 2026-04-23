@@ -20,7 +20,7 @@ require("askCode").set_config(key, value) -- set value at runtime
 
 ```lua
 require("askCode").setup({
-  agent        = "gemini",   -- "gemini" | "kiro" | "opencode"
+  agent        = "gemini",   -- "gemini" | "kiro" | "opencode" | "claude"
   debug        = false,      -- enables vim.notify debug logs
   quit_key     = "q",        -- key to close response window
   output_format = "json",    -- currently unused
