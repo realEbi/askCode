@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/realEbi/askCode/compare/v1.2.0...v1.3.0) (2026-04-23)
+
+
+### Features
+
+* **opencode:** adds opencode suppport ([d21ea08](https://github.com/realEbi/askCode/commit/d21ea088880ec63b38bfda95e39407fb06e2208e))
+
 ## [1.2.0](https://github.com/realEbi/askCode/compare/v1.1.0...v1.2.0) (2025-12-07)
 
 
